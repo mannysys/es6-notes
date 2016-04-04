@@ -1,0 +1,53 @@
+<!--
+    通过Proxy拦截对象属性的操作
+    例：对象属性进行拦截
+-->
+<script>
+    // Proxy只有Firefox火狐浏览器支持，其它不支持
+
+    var obj = {name:'leo',group:'javascript',_type:'student'};
+
+    //创建一个Proxy代理器
+    //第一个参数加入代理对象，之后是具体的配置，
+    //在配置中我们要拦截get和set也就是对它的访问和设置进行拦截
+    //第一参数target全等于obj的，第二个参数是key
+    var proxy = new Proxy(obj,{
+        get:function(target,key){
+            //如果key不是等于_ 的就返回值
+            if(key[0] !== '_'){
+                //return Reflect.get(target,key);//允许返回值操作
+                //Reflect.get不写这个，也可以写成以下方式
+                return target[key];
+            }
+        },
+        set:function(target,key,value){
+            if(key[0] !== '_'){
+                //Reflect.set(target,key,value);//允许设置值操作
+                //或者这样写
+                target[key] = value;
+            }
+        },
+        //对删除操作进行拦截
+        deleteProperty:function(target,key){
+            if(key[0] !== '_'){
+                //Reflect.deleteProperty(target,key);//允许删除值操作
+                //或者这样写
+                delete target[key];
+            }
+        }
+    });
+
+    //console.log(proxy.name);
+    //如果你要设置对象默认值，就必须设置一句Reflect.set(target,key,value); 这样才能成功
+    //proxy.name = 'zengliang';
+    //console.log(obj.name);
+
+    //删除值
+    //delete proxy.group;
+    //console.log(obj.group);
+
+    //代理拦截器属性没有返回值，非代理原始对象属性返回了值
+    console.log(proxy._type,obj._type);
+
+
+</script>

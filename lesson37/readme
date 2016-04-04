@@ -1,0 +1,25 @@
+使用工具 JSPM 可以把ES6代码无缝的在浏览器上运行
+
+
+1、使用全局方式安装，在任何项目下都可以使用
+npm install jspm -g
+
+
+2、在当前项目下安装
+
+1）npm init   初始化下项目
+2）npm install jspm   安装jspm
+
+3）初始化下当前jspm环境，在项目根目录下初始化
+ ./node_modules/.bin/jspm init
+4）然后在执行安装config中相应的依赖东东
+jspm install
+
+
+5）输入. 在当前目录下
+Enter client baseURL (public folder URL) [/]:.
+
+6）输入 babel
+Which ES6 transpiler would you like to use, Babel, TypeScript or Traceur? [babel]
+:babel
+

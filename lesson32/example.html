@@ -1,0 +1,37 @@
+<!--
+    函数执行的代理拦截
+-->
+
+<script>
+    // 使用 firefox运行
+    // 例1：函数执行的代理拦截
+    function test(){
+        console.log('hello world');
+    }
+    var proxyFun = new Proxy(test,{
+        // cxt是上下文，args是数组
+        apply:function(target,cxt,args){
+            console.log('this is proxy')
+            return Reflect.apply(target,cxt,args);
+        }
+    });
+
+    proxyFun();
+    //也可以用以下两种方式监听
+    //proxyFun.apply(null);
+    //proxyFun.call(null);
+
+
+    // 例2：构造函数代理拦截
+    function User(){
+        console.log('this is class');
+    }
+    var ClassProxy = new Proxy(User,{
+        construct:function(target,args){
+            console.log('this is class proxy handle');
+            return Reflect.construct(target,args);
+        }
+    });
+    new ClassProxy();
+
+</script>

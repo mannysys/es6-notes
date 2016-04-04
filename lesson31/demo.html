@@ -1,0 +1,53 @@
+<!--
+    for-in 与 in 操作的代理拦截
+-->
+<script>
+    //运行 firefox浏览器
+    // 例1：in
+    var obj = {_name:'leo',name:'zengliang'};
+    
+    var proxy = new Proxy(obj,{
+        has: function (target,key) {
+            if(key[0] === '_'){
+                return false;
+            }else{
+                return key in target;
+            }
+        }
+    });
+    
+    //判断obj对象中是否有name这个属性,返回布尔值
+    var bool = 'name' in proxy;
+    console.log('has name',bool);
+    console.log('has _name','_name' in proxy);
+
+    // 例2：for in
+    var obj2 = {
+        name:'leo',
+        _name:'zengliang',
+        age:22,
+        group:'javascript'
+    };
+    var proxy2 = new Proxy(obj2,{
+        enumerate: function(target){
+            return Object.keys(target).filter(function(key){
+                //过滤掉属性名带下划线的
+                return key[0] !== '_';
+            })[Symbol.iterator]();
+        }
+    });
+
+    for(var key in proxy2){
+        console.log(key);
+    }
+
+
+
+
+
+
+
+
+
+
+</script>
