@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<input type="file" id="fileinput" />
+
+<script>
+    //获取到数据
+    var fileinput = document.querySelector("#fileinput");
+    //监听事件
+    fileinput.onchange = function(){
+        var file = fileinput.files[0];
+        var filereader = new FileReader();//创建个读取器
+        filereader.readAsArrayBuffer(file);//读取这个读取器，转化为ArrayBuffer
+        //监听
+        filereader.onload = function(){
+            console.log(filereader.result.byteLength);//得到图片长度
+        }
+
+
+    };
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
